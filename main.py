@@ -1,5 +1,6 @@
 
 import os
+import json
 import logging
 import subprocess
 from pyDOE2 import ff2n
@@ -82,12 +83,15 @@ class Main(object):
             # To see output remove stdout and stderr
             FNULL = open(os.devnull, 'w')
             # This type is blocking
-            subprocess.check_call(command, shell=True)
+            subprocess.check_call(command, shell=True, stdout=FNULL, stderr=subprocess.STDOUT)
             # TODO maybe add another command for running the test to get the accuracy with
             # these hyper-parameters settings after the "train" is called with "test"
         except subprocess.CalledProcessError as e:
             logger.error(e)
             raise
+
+        # clean work folder after each job
+        os.system("rm -r /home/am72ghiassi/bd/spark/work/*")
 
 
 if __name__ == "__main__":
@@ -107,4 +111,5 @@ if __name__ == "__main__":
     main.run_experiments()
 
     # Write all replications of all experiments to disc
-    print(main.data)
+    with open('data.json', 'w') as fp:
+        json.dump(main.data, fp, sort_keys=True, indent=4)
