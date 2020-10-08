@@ -3,6 +3,7 @@ import numpy as np
 import scipy.stats as stats
 import researchpy as rp
 import statsmodels.api as sm
+import json
 from statsmodels.formula.api import ols
 
 import matplotlib.pyplot as plt
@@ -26,40 +27,19 @@ factors = dict({
 
 
 sign_table_binary = ff2n(len(factors))
-# replace -1 with 0 to look up actual values in factors dict
 sign_table = [[list(factors.values())[i][0] if x == -1 else list(factors.values())[i][1] for i,x in enumerate(sign_row)] for sign_row in sign_table_binary]
-#sign_table = [list(map(lambda (i,x): factors[i][0] if x == -1 else factors[i][1], sign_row)) for sign_row in sign_table]
-
-# response time should always be a factor of params
-# in our 2^k factorial (with n factors): 2^n
-# we have 5 now, so 2^5=32
-
-import json
 
 with open('data.json') as f:
-  data = json.load(f)
+  data_json = json.load(f)
 
 def json_parse_to_dict(data, model):
-
+  """
+  creates dictionaries, with support for replication, based on a string
+  with config settings and a response time. Only supports one model.
+  """
   json_normalized = np.r_[list(data[model].values())].flatten()
   data = {}
-
-  # first do a loop to average out the replications
-#  replication_values = {}
-#  for config_string in json_normalized:
-#    setting = config_string.split(",")
-#    setting_info = {}
-#    for s in setting:
-#      setting_info[s.split("-")[1].strip()] = s.split("-")[0].strip()
-#    data_key = "{}|{}|{}|{}|{}".format(setting_info['GBRAM'],setting_info['Cores'],setting_info['batchSize'],setting_info['learningRate'],setting_info['learningRateDecay'])
-#    if not data_key in replication_values:
-#      replication_values[data_key] = []
-#    replication_values[data_key].append(setting_info['responsetime'])
-
-#  averages = {}
-#  for k, v in replication_values.items():
-#    averages[k] = np.average(list(map(float, v)))
-
+  # Extract response times and add them to a list in dictionary based on their configs
   for config_string in json_normalized:
     setting = config_string.split(",")
     setting_info = {}
@@ -71,10 +51,11 @@ def json_parse_to_dict(data, model):
     data[data_key].append(setting_info['responsetime'])
 
   return data
-data = json_parse_to_dict(data,'bi-rnn')
+data = json_parse_to_dict(data_json,'bi-rnn')
 
 
 data_names = {}
+# Create a sign table and fill it with the configuations that we used (found in the factors dict)
 for sign_row in sign_table:
   for i,x in enumerate(sign_row):
     factor = list(factors.keys())[i]
@@ -86,8 +67,12 @@ for sign_row in sign_table:
 
 response_times = []
 
-reps = 1
+observations = len(np.r_[list(data_json['bi-rnn'].values())].flatten())
+# the amount of replications that have been done (extracted from factors / observations)
+reps = int(2**len(factors)/observations)
 
+
+# Build the response_times array in the order the anova analyser expects
 for r in range(0, reps):
   for config in sign_table:
     conf_str = "|".join(list(map(str, config)))
@@ -96,13 +81,11 @@ for r in range(0, reps):
     else:
       response_times.append(8888888) #maybe use average for missing cases?
 
-print(response_times)
-#response_times = range(1,33) # needs to be grabbed from a loop over factors that look up in the json data
-
 d = {'Response': response_times}
 d2 = {**data_names, **d}
 
 df = pd.DataFrame(data=d2)
 # Gettin summary statistics
-print(rp.summary_cont(df.groupby( list(factors.keys()) ))['Response'])
-#print(rp.summary_cont(df.groupby( 'ram' ))['Response'])
+# todo: get better outputs, based on theory
+#print(rp.summary_cont(df.groupby( list(factors.keys()) ))['Response'])
+print(rp.summary_cont(df.groupby( 'ram' ))['Response'])
