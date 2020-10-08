@@ -19,9 +19,9 @@ function lastSucceeded {
 }
 
 #############CALL VICTOR SCRIPT TO RUN THE MODEL#########################
-TIMEFORMAT=%3R
-eta=$(time (/home/am72ghiassi/bd/spark/bin/runlenet.sh 2>&1>/dev/null) 2>&1>/dev/null)
-unset TIMEFORMAT
+#TIMEFORMAT=%3R
+#eta=$(time (/home/am72ghiassi/bd/spark/bin/runlenet.sh 2>&1>/dev/null) 2>&1>/dev/null)
+#unset TIMEFORMAT
 #############CALL VICTOR SCRIPT TO RUN THE MODEL#########################
 
 #Get the last file created in spark-events directory
