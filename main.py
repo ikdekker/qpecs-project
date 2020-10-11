@@ -143,8 +143,8 @@ if __name__ == "__main__":
     (options, args) = parser.parse_args(sys.argv)
 
     factors = dict({
-        'ram': [1, 1],
-        'cores': [1, 1],
+        'ram': [1, 8],
+        'cores': [1, 4],
         'batch_size': [64, 512],
         'learning_rate': [0.001, 0.1],
         'learning_rate_decay': [0.0001, 0.001]
