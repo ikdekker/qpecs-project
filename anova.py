@@ -11,10 +11,10 @@ from pyDOE2 import *
 
 
 # parameter definition
-cores = [4,8]
-learning_rate = [0.001,0.002]
-learning_decay = [1,2]
-memory = [4,8]
+#cores = [4,8]
+#learning_rate = [0.001,0.002]
+#learning_decay = [1,2]
+#memory = [4,8]
 
 factors = dict({
         'ram': [1, 8],
@@ -32,6 +32,8 @@ sign_table = [[list(factors.values())[i][0] if x == -1 else list(factors.values(
 with open('data.json') as f:
   data_json = json.load(f)
 
+
+
 def json_parse_to_dict(data, model):
   """
   creates dictionaries, with support for replication, based on a string
@@ -45,6 +47,7 @@ def json_parse_to_dict(data, model):
     setting_info = {}
     for s in setting:
       setting_info[s.split("-")[1].strip()] = s.split("-")[0].strip()
+#            "4-Cores, 8-GBRAM, 512-batchSize, 0.1-learningRate, 0.0001-learningRateDecay, succeeded-status, 0.479600012302-accuracy, 60.41239890500037-responsetime",
     data_key = "{}|{}|{}|{}|{}".format(setting_info['GBRAM'],setting_info['Cores'],setting_info['batchSize'],setting_info['learningRate'],setting_info['learningRateDecay'])
     if not data_key in data:
       data[data_key] = []
@@ -53,8 +56,13 @@ def json_parse_to_dict(data, model):
   return data
 data = json_parse_to_dict(data_json,'bi-rnn')
 
-
 data_names = {}
+
+observations = len(np.r_[list(data_json['bi-rnn'].values())].flatten())
+# the amount of replications that have been done (extracted from factors / observations)
+reps = int(observations/2**len(factors))
+
+
 # Create a sign table and fill it with the configuations that we used (found in the factors dict)
 for sign_row in sign_table:
   for i,x in enumerate(sign_row):
@@ -67,11 +75,8 @@ for sign_row in sign_table:
 
 response_times = []
 
-observations = len(np.r_[list(data_json['bi-rnn'].values())].flatten())
-# the amount of replications that have been done (extracted from factors / observations)
-reps = int(2**len(factors)/observations)
 
-
+#print(data)
 # Build the response_times array in the order the anova analyser expects
 for r in range(0, reps):
   for config in sign_table:
@@ -81,11 +86,26 @@ for r in range(0, reps):
     else:
       response_times.append(8888888) #maybe use average for missing cases?
 
+
+# Final data
+data_names_repeated = {}
+for a, (b,c) in enumerate(data_names.items()):
+  data_names_repeated[b] = np.tile(c,reps)
+
 d = {'Response': response_times}
-d2 = {**data_names, **d}
+d2 = {**data_names_repeated, **d}
+
 
 df = pd.DataFrame(data=d2)
 # Gettin summary statistics
 # todo: get better outputs, based on theory
 #print(rp.summary_cont(df.groupby( list(factors.keys()) ))['Response'])
-print(rp.summary_cont(df.groupby( 'ram' ))['Response'])
+#print(rp.summary_cont(df.groupby( 'ram' ))['Response'])
+
+model = ols('Response ~ C(ram)*C(cores)*C(batch_size)*C(learning_rate)*C(learning_rate_decay)', df).fit()
+
+# Seeing if the overall model is significant
+print(f"Overall model F({model.df_model: .0f},{model.df_resid: .0f}) = {model.fvalue: .3f}, p = {model.f_pvalue: .4f}")
+print(model.summary())
+print("==============================")
+print(sm.stats.anova_lm(model, typ= 2))
