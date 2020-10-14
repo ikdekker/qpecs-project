@@ -5,6 +5,11 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 from sklearn import preprocessing
 from sklearn.cluster import KMeans
+# Stdout options
+# pd.set_option('display.max_rows', None)
+# pd.set_option('display.max_columns', None)
+# pd.set_option('display.width', None)
+# pd.set_option('display.max_colwidth', -1)
 
 sns.set(
     context="notebook", palette="Spectral",
@@ -14,13 +19,12 @@ sns.set(
 ###################
 #  Load the JSON  #
 ###################
-with open('data.json') as json_file:
+with open('data_full.json') as json_file:
     data = json.load(json_file)
 
 #########################
 #  Process & Transform  #
 #########################
-
 csv_columns = [
     "model", "Cores", "GBRAM", "batchSize", "learningRate",
     "learningRateDecay", "status", "accuracy", "responsetime"
@@ -28,35 +32,61 @@ csv_columns = [
 
 csv_values = ""
 for model_name in data:
-    # split by comma
     replications = data[model_name]
-    for experiment in replications["0"]:  # TODO add other replications
-        parameters = experiment.split(',')
-        row = ""
-        for parameter in parameters:
-            row += parameter.split('-')[0].strip()+","
-        row = model_name+","+row
-        csv_values += row.strip()
+    for i in range(3):
+        for experiment in replications[""+str(i)]:
+            parameters = experiment.split(',')
+            row = ""
+            for parameter in parameters:
+                row += parameter.split('-')[0].strip()+","
+            row = model_name+","+row
+            csv_values += row.strip()
 
 # Process, reshape and turn into a dataframe
 data = np.array(csv_values.split(','))
 data = data[:len(data)-1]
-data = data.reshape(64, len(csv_columns))
+data = data.reshape(192, len(csv_columns))
 df = pd.DataFrame(data, columns=csv_columns)
 
-# Encode the non continuous/discrete columns to in integer number
-categories = ['succeeded', 'failed']
+###################################################################
+# Encode the non continuous/discrete columns to in integer number #
+# and transform integer-string values to integer                  #
+###################################################################
+categories_status = ['succeeded', 'failed']
 le = preprocessing.LabelEncoder()
-le.fit(categories)
-arr = le.transform(['succeeded', 'failed'])
+le.fit(categories_status)
+arr = le.transform(categories_status)
 df['status'] = df['status'].apply((lambda x: le.transform([x])[0]))
-print(df.head(10))
+
+categories_model = ['lenet5', 'bi-rnn']
+le = preprocessing.LabelEncoder()
+le.fit(categories_model)
+arr = le.transform(categories_model)
+df['model'] = df['model'].apply((lambda x: le.transform([x])[0]))
+
 print(df.describe())
+
+# Convert these 2 columns to a numeric value
+df['accuracy'] = pd.to_numeric(df['accuracy'])
+df['responsetime'] = pd.to_numeric(df['responsetime'])
+
+#############
+#  Group By #
+#############
+# Group by these columns and calculate the the mean of
+# the accuracy and the responseTime
+df = df.groupby([
+    'model', 'Cores', 'GBRAM', 'batchSize',
+    'learningRate', 'learningRateDecay', 'status'
+], as_index=False).mean()
+
+df.to_csv('data_organized.csv', float_format='%.6f', )
 
 ######################
 #  Start of K-Means  #
 ######################
-X = df.iloc[:, [1, 2, 3, 4, 5, 6, 7, 8]].values
+# Take the last accuracy and response time column
+X = df.iloc[:, [7, 8]].values
 
 # Using the elbow method to find the optimal number of clusters.
 # WCSS (Within Cluster Sum of Squares), WCSS is defined as the
@@ -76,24 +106,16 @@ plt.xlabel('Number of clusters')
 plt.ylabel('WCSS')
 plt.show()
 
-# Fitting K-Means to the dataset
-kmeans = KMeans(n_clusters=2, init='k-means++', random_state=42)
-y_kmeans = kmeans.fit_predict(X)
-
-plt.figure(figsize=(15, 7))
-sns.scatterplot(
-    X[y_kmeans == 0, 0], X[y_kmeans == 0, 1],
-    color='yellow', label='Cluster 1', s=50
-)
-
-sns.scatterplot(
-    kmeans.cluster_centers_[:, 0], kmeans.cluster_centers_[:, 1],
-    color='red', label='Centroids', s=300, marker=','
-)
-
-plt.grid(False)
-plt.title('Clusters of Jobs')
-plt.xlabel('Number of Cores')
-plt.ylabel('Responese Time')
-plt.legend()
+n_clusters = 2
+km = KMeans(init='k-means++', n_clusters=n_clusters)
+km_clustering = km.fit(X)
+sns.pairplot(df.assign(hue=km_clustering.labels_), hue='hue')
 plt.show()
+
+# X = df.iloc[:, [1, 2, 3, 4, 5, 6]].values
+# n_clusters = 4
+# km = KMeans(init='k-means++', n_clusters=n_clusters)
+# km_clustering = km.fit(X)
+# df = df.iloc[:, [1, 2, 3, 4, 5, 6]]
+# sns.pairplot(df)
+# plt.show()
