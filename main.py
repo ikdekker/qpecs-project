@@ -35,7 +35,7 @@ class Main(object):
                     batch_size_level = self.factors['batch_size'][-1 if int(self.sign_table[i][2]) == -1 else 0]
                     learning_rate_level = self.factors['learning_rate'][-1 if int(self.sign_table[i][3]) == -1 else 0]
                     learning_rate_decay_level = self.factors['learning_rate_decay'][-1 if int(self.sign_table[i][4]) == -1 else 0]
-                    print("New Job Started");
+                    print("New Job Started", model, "replication: ", (replication_nr + 1), "/", self.nr_of_replications, "sing table: ", (i+1), "/", len(self.sign_table));
                     status, accuracy, responsetime = self.submit_job(
                             cores_level, ram_level, batch_size_level, learning_rate_level,
                             learning_rate_decay_level, model, replication_nr
@@ -149,7 +149,7 @@ if __name__ == "__main__":
         'learning_rate': [0.001, 0.1],
         'learning_rate_decay': [0.0001, 0.001]
     })
-    models = ['lenet5', 'bi-rnn']
+    models = ['bi-rnn', 'lenet5']
     nr_of_replications = 3
     k = len(factors)
     nr_of_experiments = 2**k  # Full factorial
