@@ -1,0 +1,11 @@
+model,Cores,GBRAM,batchSize,learningRate,learningRateDecay,status
+bi-rnn,1,6,256,0.1,0.0001,slow
+bi-rnn,8,3,512,0.1,0.0001,normal
+bi-rnn,8,6,256,0.001,0.001,normal
+bi-rnn,1,6,256,0.001,0.001,slow
+bi-rnn,8,3,256,0.001,0.001,normal
+lenet5,8,3,512,0.1,0.0001,normal
+lenet5,1,3,512,0.1,0.0001,normal
+lenet5,1,6,256,0.1,0.0001,slow
+lenet5,8,3,256,0.1,0.0001,normal
+lenet5,1,3,256,0.1,0.0001,slow
