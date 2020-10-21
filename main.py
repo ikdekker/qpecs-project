@@ -64,10 +64,10 @@ class Main(object):
         --dataPath /tmp/mnist \
         --checkpointPath \"/tmp/{6}\" \
         --modelPath {9} \
-        --batchSize {2} \
         --endTriggerNum {3} \
         --learningRate {4} \
         --learningrateDecay {5} \
+        --batchSize {2} \
         """.format(cores, ram, batch_size, epoch, learning_rate, learning_rate_decay, model, self.master, action, modelPath)
 
 
