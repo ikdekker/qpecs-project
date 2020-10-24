@@ -1,0 +1,66 @@
+{
+    "bi-rnn": {
+        "0": [
+            "8-Cores, 6000-GBRAM, 512-batchSize, 0.01-learningRate, 0.001-learningRateDecay, succeeded-status, 0.167199999094-accuracy, 173.0216731709952-responsetime",
+            "1-Cores, 6000-GBRAM, 512-batchSize, 0.01-learningRate, 0.001-learningRateDecay, succeeded-status, 0.171800002456-accuracy, 295.108606941998-responsetime",
+            "8-Cores, 1000-GBRAM, 512-batchSize, 0.01-learningRate, 0.001-learningRateDecay, succeeded-status, 0.146699994802-accuracy, 166.2626868079824-responsetime",
+            "1-Cores, 1000-GBRAM, 512-batchSize, 0.01-learningRate, 0.001-learningRateDecay, succeeded-status, 0.115199998021-accuracy, 296.2229760760092-responsetime",
+            "8-Cores, 6000-GBRAM, 64-batchSize, 0.01-learningRate, 0.001-learningRateDecay, succeeded-status, 0.336299985647-accuracy, 702.8996201469854-responsetime",
+            "1-Cores, 6000-GBRAM, 64-batchSize, 0.01-learningRate, 0.001-learningRateDecay, succeeded-status, 0.256799995899-accuracy, 713.6276207450137-responsetime",
+            "8-Cores, 1000-GBRAM, 64-batchSize, 0.01-learningRate, 0.001-learningRateDecay, succeeded-status, 0.254000008106-accuracy, 743.1535243249964-responsetime",
+            "1-Cores, 1000-GBRAM, 64-batchSize, 0.01-learningRate, 0.001-learningRateDecay, succeeded-status, 0.344099998474-accuracy, 737.9316561000014-responsetime"
+        ],
+        "1": [
+            "8-Cores, 6000-GBRAM, 512-batchSize, 0.01-learningRate, 0.001-learningRateDecay, succeeded-status, 0.144400000572-accuracy, 170.11958616500488-responsetime",
+            "1-Cores, 6000-GBRAM, 512-batchSize, 0.01-learningRate, 0.001-learningRateDecay, succeeded-status, 0.135399997234-accuracy, 305.36848342997837-responsetime",
+            "8-Cores, 1000-GBRAM, 512-batchSize, 0.01-learningRate, 0.001-learningRateDecay, succeeded-status, 0.124200001359-accuracy, 172.40486197100836-responsetime",
+            "1-Cores, 1000-GBRAM, 512-batchSize, 0.01-learningRate, 0.001-learningRateDecay, succeeded-status, 0.180399999022-accuracy, 303.75253035200876-responsetime",
+            "8-Cores, 6000-GBRAM, 64-batchSize, 0.01-learningRate, 0.001-learningRateDecay, succeeded-status, 0.231399998069-accuracy, 730.0640615040029-responsetime",
+            "1-Cores, 6000-GBRAM, 64-batchSize, 0.01-learningRate, 0.001-learningRateDecay, succeeded-status, 0.329600006342-accuracy, 742.7462265489739-responsetime",
+            "8-Cores, 1000-GBRAM, 64-batchSize, 0.01-learningRate, 0.001-learningRateDecay, succeeded-status, 0.290699988604-accuracy, 716.8888739280228-responsetime",
+            "1-Cores, 1000-GBRAM, 64-batchSize, 0.01-learningRate, 0.001-learningRateDecay, succeeded-status, 0.317000001669-accuracy, 728.8398972429859-responsetime"
+        ],
+        "2": [
+            "8-Cores, 6000-GBRAM, 512-batchSize, 0.01-learningRate, 0.001-learningRateDecay, succeeded-status, 0.170800000429-accuracy, 169.06433685001684-responsetime",
+            "1-Cores, 6000-GBRAM, 512-batchSize, 0.01-learningRate, 0.001-learningRateDecay, succeeded-status, 0.186700001359-accuracy, 298.29077072101063-responsetime",
+            "8-Cores, 1000-GBRAM, 512-batchSize, 0.01-learningRate, 0.001-learningRateDecay, succeeded-status, 0.147200003266-accuracy, 171.15333608697983-responsetime",
+            "1-Cores, 1000-GBRAM, 512-batchSize, 0.01-learningRate, 0.001-learningRateDecay, succeeded-status, 0.128499999642-accuracy, 307.1685568690009-responsetime",
+            "8-Cores, 6000-GBRAM, 64-batchSize, 0.01-learningRate, 0.001-learningRateDecay, succeeded-status, 0.264400005341-accuracy, 727.8797536540078-responsetime",
+            "1-Cores, 6000-GBRAM, 64-batchSize, 0.01-learningRate, 0.001-learningRateDecay, succeeded-status, 0.347400009632-accuracy, 724.9748720400094-responsetime",
+            "8-Cores, 1000-GBRAM, 64-batchSize, 0.01-learningRate, 0.001-learningRateDecay, succeeded-status, 0.287999987602-accuracy, 729.1974249210034-responsetime",
+            "1-Cores, 1000-GBRAM, 64-batchSize, 0.01-learningRate, 0.001-learningRateDecay, succeeded-status, 0.265799999237-accuracy, 749.9156893279869-responsetime"
+        ]
+    },
+    "lenet5": {
+        "0": [
+            "8-Cores, 6000-GBRAM, 512-batchSize, 0.01-learningRate, 0.001-learningRateDecay, succeeded-status, 0.896899998188-accuracy, 141.82326245098375-responsetime",
+            "1-Cores, 6000-GBRAM, 512-batchSize, 0.01-learningRate, 0.001-learningRateDecay, succeeded-status, 0.894999980927-accuracy, 254.06046663201414-responsetime",
+            "8-Cores, 1000-GBRAM, 512-batchSize, 0.01-learningRate, 0.001-learningRateDecay, succeeded-status, 0.894999980927-accuracy, 141.02302740799496-responsetime",
+            "1-Cores, 1000-GBRAM, 512-batchSize, 0.01-learningRate, 0.001-learningRateDecay, succeeded-status, 0.896899998188-accuracy, 253.03014765502303-responsetime",
+            "8-Cores, 6000-GBRAM, 64-batchSize, 0.01-learningRate, 0.001-learningRateDecay, succeeded-status, 0.944199979305-accuracy, 559.9867402439995-responsetime",
+            "1-Cores, 6000-GBRAM, 64-batchSize, 0.01-learningRate, 0.001-learningRateDecay, succeeded-status, 0.941399991512-accuracy, 647.5129871690006-responsetime",
+            "8-Cores, 1000-GBRAM, 64-batchSize, 0.01-learningRate, 0.001-learningRateDecay, succeeded-status, 0.93599998951-accuracy, 576.2506635320024-responsetime",
+            "1-Cores, 1000-GBRAM, 64-batchSize, 0.01-learningRate, 0.001-learningRateDecay, succeeded-status, 0.949100017548-accuracy, 638.6108847249998-responsetime"
+        ],
+        "1": [
+            "8-Cores, 6000-GBRAM, 512-batchSize, 0.01-learningRate, 0.001-learningRateDecay, succeeded-status, 0.898500025272-accuracy, 140.15820959201665-responsetime",
+            "1-Cores, 6000-GBRAM, 512-batchSize, 0.01-learningRate, 0.001-learningRateDecay, succeeded-status, 0.898699998856-accuracy, 253.2021581660083-responsetime",
+            "8-Cores, 1000-GBRAM, 512-batchSize, 0.01-learningRate, 0.001-learningRateDecay, succeeded-status, 0.900900006294-accuracy, 138.9433689500147-responsetime",
+            "1-Cores, 1000-GBRAM, 512-batchSize, 0.01-learningRate, 0.001-learningRateDecay, succeeded-status, 0.903100013733-accuracy, 252.06465031098924-responsetime",
+            "8-Cores, 6000-GBRAM, 64-batchSize, 0.01-learningRate, 0.001-learningRateDecay, succeeded-status, 0.94010001421-accuracy, 553.3455311080033-responsetime",
+            "1-Cores, 6000-GBRAM, 64-batchSize, 0.01-learningRate, 0.001-learningRateDecay, succeeded-status, 0.943499982357-accuracy, 639.9236936459783-responsetime",
+            "8-Cores, 1000-GBRAM, 64-batchSize, 0.01-learningRate, 0.001-learningRateDecay, succeeded-status, 0.937099993229-accuracy, 573.406853403023-responsetime",
+            "1-Cores, 1000-GBRAM, 64-batchSize, 0.01-learningRate, 0.001-learningRateDecay, succeeded-status, 0.941999971867-accuracy, 649.7851104190049-responsetime"
+        ],
+        "2": [
+            "8-Cores, 6000-GBRAM, 512-batchSize, 0.01-learningRate, 0.001-learningRateDecay, succeeded-status, 0.906700015068-accuracy, 140.34923633397557-responsetime",
+            "1-Cores, 6000-GBRAM, 512-batchSize, 0.01-learningRate, 0.001-learningRateDecay, succeeded-status, 0.899600028992-accuracy, 258.9471303980099-responsetime",
+            "8-Cores, 1000-GBRAM, 512-batchSize, 0.01-learningRate, 0.001-learningRateDecay, succeeded-status, 0.89770001173-accuracy, 142.2577992680017-responsetime",
+            "1-Cores, 1000-GBRAM, 512-batchSize, 0.01-learningRate, 0.001-learningRateDecay, succeeded-status, 0.905099987984-accuracy, 258.38731062799343-responsetime",
+            "8-Cores, 6000-GBRAM, 64-batchSize, 0.01-learningRate, 0.001-learningRateDecay, succeeded-status, 0.939999997616-accuracy, 571.9620715870115-responsetime",
+            "1-Cores, 6000-GBRAM, 64-batchSize, 0.01-learningRate, 0.001-learningRateDecay, succeeded-status, 0.942799985409-accuracy, 646.7255719870154-responsetime",
+            "8-Cores, 1000-GBRAM, 64-batchSize, 0.01-learningRate, 0.001-learningRateDecay, succeeded-status, 0.933000028133-accuracy, 571.7169318649976-responsetime",
+            "1-Cores, 1000-GBRAM, 64-batchSize, 0.01-learningRate, 0.001-learningRateDecay, succeeded-status, 0.946600019932-accuracy, 640.8076984790096-responsetime"
+        ]
+    }
+}
